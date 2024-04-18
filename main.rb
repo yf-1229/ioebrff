@@ -7,4 +7,3 @@ begin
   Curses.addstr(s)
   Curses.refresh
 end
-
