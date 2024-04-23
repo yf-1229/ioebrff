@@ -22,7 +22,8 @@ edit_file() {
   
   # ファイルが存在するか確認
   if [ -f "$filename" ]; then
-    ruby main.rb 
+    export filename
+    screen ruby main.rb
   else
     whiptail --title "Error" --msgbox "File not found: $filename" 10 60
   fi
