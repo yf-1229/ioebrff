@@ -5,8 +5,10 @@ RUBY_SCRIPT=""
 main_menu() {
   choice=$(whiptail --title "ioebrff" --menu "How can I help today?" 15 60 4 \
     "1" "Edit File" \
-    "2" "Run Code" \
-    "3" "Exit" \
+    "2" "Save File" \
+    "3" "Run Code" \
+    "4" "Terminal" \
+    "5" "Document" \
     3>&1 1>&2 2>&3)
 
   case $choice in
@@ -15,7 +17,6 @@ main_menu() {
     3) run_code ;; # Ruby Only
     4) Terminal ;;
     5) Document ;;
-    6) exit ;;
     *) echo "Invailid option" ;;
   esac 
 }
