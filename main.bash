@@ -11,8 +11,11 @@ main_menu() {
 
   case $choice in
     1) edit_file ;;
-    2) run_code ;;
-    3) exit ;;
+    2) save_file ;;
+    3) run_code ;; # Ruby Only
+    4) Terminal ;;
+    5) Document ;;
+    6) exit ;;
     *) echo "Invailid option" ;;
   esac 
 }
@@ -25,7 +28,9 @@ edit_file() {
     export filename
     screen ruby main.rb
   else
-    whiptail --title "Error" --msgbox "File not found: $filename" 10 60
+    filename=$(whiptail --title "Edit File" --inputbox "Enter File Path:" 10 60 3>&1 1>&2 2>&3)
+    export filename
+    screen ruby main.rb
   fi
   
   main_menu
