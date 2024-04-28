@@ -1,12 +1,20 @@
 require "curses"
+require "./editwindow"
+
+filename = ENV['FILENAME_IOEBRFF']
 
 Curses.init_screen
-begin
-    s = "Hello World!"
-    Curses.setpos(Curses.lines / 2, Curses.cols / 2 - (s.length / 2))
-    Curses.addstr(s)
-    Curses.refresh
-    Curses.getch
-ensure
-    Curses.close_screen
-end
+Curses.cbreak
+Curses.noecho
+
+# Base window
+base_window = Curses.stdscr
+# Edit Window
+edit_window = EditWindow.new(base_window)
+
+# Open file
+edit_window.display(filename)
+edit_window.getch
+
+Curses.close_screen
+
