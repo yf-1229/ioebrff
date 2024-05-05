@@ -13,5 +13,8 @@ class Hud
         wind.setpos(begin_y,(max_x/2)-(filename.length/2))
         wind.addstr(filename)
         # メニュー
-        
+        @window = wind.subwin((max_y-begin_y), max_x, begin_y, 0)
+        @window.refresh
+    end
+end
         

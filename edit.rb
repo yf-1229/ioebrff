@@ -9,7 +9,7 @@ class EditWind
     def display(filename)
         @filename = filename
         begin
-            @file = open(@file_name, "a+")
+            @file = open(@filename, "a+")
             @data = []
             @file.each_line do |line|
                 @data.push(line.chop) # 行末の改行を取り除く
