@@ -3,7 +3,7 @@
 RUBY_SCRIPT=""
 
 main_menu() {
-    choice=$(whiptail --title "ioebrff" --menu "How can I help today?" 15 60 4 \
+    choice=$(whiptail --title "ioebrff" --menu "How can I help today?" 20 40 5\
         "1" "Open File" \
         "2" "Create File" \
         "3" "Terminal" \
@@ -22,12 +22,12 @@ main_menu() {
 }
 
 open_file() {
-    filename=$(whiptail --title "Open File" --inputbox "Enter File Path:" 10 60 3>&1 1>&2 2>&3)
+    filename=$(whiptail --title "Open File" --inputbox "Enter File Path:" 20 40 3>&1 1>&2 2>&3)
 
     if [ -f "$filename" ]; then
         screen ruby main.rb $filename
     else
-        whiptail --title "Error" --msgbox "File Not Found: $filename" 10 60
+        whiptail --title "Error" --msgbox "File Not Found: $filename" 15 30
         main_menu
     fi
 

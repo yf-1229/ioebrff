@@ -2,7 +2,7 @@ require "curses"
 
 class EditWind
     def initialize(wind)
-        @window = wind.subwin(wind.maxy-4,wind.maxx,0,0)
+        @window = wind.subwin(wind.maxy-3,wind.maxx,0,0)
         @window.scrollok(true)
     end
     

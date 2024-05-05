@@ -4,7 +4,7 @@ class Hud
     def initialize(wind,filename="")
         max_y = wind.maxy
         max_x = wind.maxx
-        begin_y = wind.maxy - 4
+        begin_y = wind.maxy - 3
         wind.setpos(begin_y,0)
         wind.standout   # 文字表示を反転色にする
         wind.addstr(" " * max_x)
