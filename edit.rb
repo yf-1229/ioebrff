@@ -22,12 +22,85 @@ class EditWind
         rescue # Error Dialog
             raise IOError,"FILE OPEN ERROR: #{filename}"
         end
-        @window.setpos(0, 0)
+        @cursor_y = 0
+        @cursor_x = 0
+        @top_statement = 0
+        @window.setpos(@cursor_y, @cursor_x)
         @window.refresh
     end
     
     def getch
         return @window.getch
+    end
+
+    # カーソル操作
+    def cursor_down # カーソルを下へ
+        if @cursor_y >= (@window.maxy-1)
+            scroll_down
+        else
+            @cursor_y += 1
+        end
+        if @cursor_x >= (@data[@cursor_y + @top_statement ].length)
+            @cursor_x = @data[@cursor_y + @top_statement ].length
+        end
+        @window.setpos(@cursor_y, @cursor_x)
+        @window.refresh
+    end
+
+    def cursor_up # カーソルを上へ移動
+        if @cursor_y <= 0
+            scroll_up
+        else
+            @cursor_y -= 1
+        end
+        if @cursor_x >= (@data[@cursor_y + @top_statement].length)
+            @cursor_x = @data[@cursor_y + @top_statement].length
+        end
+        @window.setpos(@cursor_y,@cursor_x)
+        @window.refresh
+    end
+
+    def cursor_left # カーソルを左へ移動
+        unless @cursor_x <= 0
+            @cursor_x -= 1
+        end
+        @window.setpos(@cursor_y, @cursor_x)
+        @window.refresh
+    end
+
+    def cursor_right # カーソルを右へ移動
+        unless @cursor_x >= (@data[@cursor_y + @top_statement].length)
+            @cursor_x += 1
+        end
+        @window.setpos(@cursor_y, @cursor_x)
+        @window.refresh
+    end
+
+    def scroll_up # 上へスクロール
+        if( @top_statement > 0)
+            @window.scrl(-1)
+            @top_statement -= 1
+            # 空いた場所にデータを一行表示
+            str = @data[@top_statement]
+            if ( str )
+                @window.setpos(0, 0)
+                @window.addstr(str)
+            end
+        end
+    end
+
+    def scroll_down　# 下へスクロール
+        if( @top_statement + @window.maxy < @data.length )
+            #（表示されている文字は上へずれる）
+            @window.scrl(1)
+            # 上へずれて空いたスペースにデータを表示
+            str = @data[@top_statement + @window.maxy]
+            if ( str )
+                @window.setpos(@window.maxy - 1, 0)
+                @window.addstr(str)
+            end
+            @top_statement += 1
+        end
     end
 end
                 

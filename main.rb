@@ -1,8 +1,7 @@
 require "curses"
 require "./edit"
 require "./hud"
-
-#filename=ENV['filename']
+require "./handler"
 
 #ファイル名をコマンドライン引数として受け取る
 if ARGV.size != 1
@@ -23,9 +22,17 @@ wind = Curses.stdscr
 edit = EditWind.new(wind)
 # 情報表示エリア
 hud = Hud.new(wind, filename)
+# イベント操作
+handler = Handler.new
 
 edit.display(filename)
-edit.getch
+
+begin
+    while true
+        ch = edit.getch # 一文字入力
+        handler = handler.execute(edit, ch)
+    end
+end
 
 #コンソール画面を終了
 Curses.close_screen

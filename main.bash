@@ -25,7 +25,7 @@ open_file() {
     filename=$(whiptail --title "Open File" --inputbox "Enter File Path:" 20 40 3>&1 1>&2 2>&3)
 
     if [ -f "$filename" ]; then
-        screen ruby main.rb $filename
+        ruby main.rb $filename
     else
         whiptail --title "Error" --msgbox "File Not Found: $filename" 15 30
         main_menu
