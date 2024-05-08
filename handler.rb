@@ -1,13 +1,13 @@
 require "./edit"
 
 class Handler
-    def execute(wind, input_ch)
-        case input_ch
+    def execute(wind, ch)
+        case ch
         when ?B # カーソルを下に
             wind.cursor_down
         when ?A # カーソルを上に
             wind.cursor_up
-        when ?C # カーソルを左に
+        when ?a # カーソルを左に
             wind.cursor_left
         when ?D # カーソルを右に
             wind.cursor_right
