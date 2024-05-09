@@ -33,32 +33,6 @@ class EditWind
         return @window.getch
     end
 
-    def scroll_up # 上へスクロール
-        if( @top_statement > 0)
-            @window.scrl(-1)
-            @top_statement -= 1
-            # 空いた場所にデータを一行表示
-            str = @data[@top_statement]
-            if ( str )
-                @window.setpos(0, 0)
-                @window.addstr(str)
-            end
-        end
-    end
-
-    def scroll_down # 下へスクロール
-        if( @top_statement + @window.maxy < @data.length )
-            #（表示されている文字は上へずれる）
-            @window.scrl(1)
-            # 上へずれて空いたスペースにデータを表示
-            str = @data[@top_statement + @window.maxy]
-            if ( str )
-                @window.setpos(@window.maxy - 1, 0)
-                @window.addstr(str)
-            end
-            @top_statement += 1
-        end
-    end
     # カーソル操作
     def cursor_down # カーソルを下へ
         if @cursor_y >= (@window.maxy-1)
@@ -102,6 +76,33 @@ class EditWind
         end
         @window.setpos(@cursor_y, @cursor_x)
         @window.refresh
+    end
+
+    def scroll_up # 上へスクロール
+        if( @top_statement > 0)
+            @window.scrl(-1)
+            @top_statement -= 1
+            # 空いた場所にデータを一行表示
+            str = @data[@top_statement]
+            if ( str )
+                @window.setpos(0, 0)
+                @window.addstr(str)
+            end
+        end
+    end
+
+    def scroll_down # 下へスクロール
+        if( @top_statement + @window.maxy < @data.length )
+            #（表示されている文字は上へずれる）
+            @window.scrl(1)
+            # 上へずれて空いたスペースにデータを表示
+            str = @data[@top_statement + @window.maxy]
+            if ( str )
+                @window.setpos(@window.maxy - 1, 0)
+                @window.addstr(str)
+            end
+            @top_statement += 1
+        end
     end
 end
                 
