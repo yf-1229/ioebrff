@@ -1,4 +1,5 @@
 require "curses"
+require "io/console"
 require "./edit"
 require "./hud"
 require "./handler"
@@ -28,11 +29,22 @@ handler = Handler.new
 edit.display(filename)
 
 begin
-    while true
-        ch = edit.getch # 一文字入力
+    while (key = STDIN.getch) != "\C-c"
+        if key == "\e" && STDIN.getch == "["
+            key = STDIN.getch
+        end
+        ch = case key
+              when "A", "k", "w", "\u0010"; "A" #↑
+              when "B", "j", "s", "\u000E"; "B" #↓
+              when "C", "l", "d", "\u0006"; "C" #→
+              when "D", "h", "a", "\u0002"; "D" #←
+            else nil
+            end
+
         handler = handler.execute(edit, ch)
     end
 end
 
+ ################
 #コンソール画面を終了
 Curses.close_screen
