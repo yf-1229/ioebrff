@@ -4,16 +4,14 @@ require "./edit"
 class Handler
     def execute(wind, input_ch)
         case input_ch
+        when ?A
+            wind.cursor_up
         when ?B
             wind.cursor_down
-        when ?A # カーソルを上に
-            wind.cursor_up
-        when ?D # カーソルを左に
-            wind.cursor_left
-        when ?C # カーソルを右に
+        when ?C
             wind.cursor_right
-        when ?q # プログラム終了
-            raise "Finish Program"
+        when ?D
+            wind.cursor_left
         end
         return self
     end

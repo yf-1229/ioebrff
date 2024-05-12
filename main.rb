@@ -29,22 +29,20 @@ handler = Handler.new
 edit.display(filename)
 
 begin
-    while (key = STDIN.getch) != "\C-c"
-        if key == "\e" && STDIN.getch == "["
-            key = STDIN.getch
+    while (key = IO.console.getch) != "\C-c"
+        if key == "\e" && (second_key = IO.console.getch) == "["
+            direction = IO.console.getch
+            ch = case direction
+                    when "A"; "A" #↑
+                    when "B"; "B" #↓
+                    when "C"; "C" #→
+                    when "D"; "D" #←
+                    else nil
+                end
+            handler = handler.execute(edit, ch) if ch
         end
-        ch = case key
-              when "A", "k", "w", "\u0010"; "A" #↑
-              when "B", "j", "s", "\u000E"; "B" #↓
-              when "C", "l", "d", "\u0006"; "C" #→
-              when "D", "h", "a", "\u0002"; "D" #←
-            else nil
-            end
-
-        handler = handler.execute(edit, ch)
     end
 end
 
- ################
 #コンソール画面を終了
 Curses.close_screen
